@@ -43,7 +43,7 @@ namespace Jem_id.webapi.Controllers
                 {
                     "naam" => query.OrderBy(p => p.Naam),
                     "potmaat" => query.OrderBy(p => p.Potmaat),
-                    "planthoogte" => query.OrderBy(p => p.Pothoogte),
+                    "pothoogte" => query.OrderBy(p => p.Pothoogte),
                     _ => query.OrderBy(p => p.Code)
                 };
             }
