@@ -18,7 +18,7 @@ namespace Jem_id.webapi.Controllers
 
         // GET: api/Plant
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Plant>>> GetPlants([FromQuery] string naam, [FromQuery] int? potmaatMin, [FromQuery] int? potmaatMax, [FromQuery] string kleur, [FromQuery] string productgroep, [FromQuery] string sortBy, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<Plant>>> GetPlants([FromQuery] string? naam, [FromQuery] int? potmaatMin, [FromQuery] int? potmaatMax, [FromQuery] string? kleur, [FromQuery] string? productgroep, [FromQuery] string? sortBy, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             var query = _context.Artikel.AsQueryable();
 
@@ -70,6 +70,10 @@ namespace Jem_id.webapi.Controllers
         [HttpPost]
         public async Task<ActionResult<Plant>> PostPlant(Plant plant)
         {
+            if (_context.Artikel.Any(e => e.Code == plant.Code))
+            {
+                return Conflict("A plant with the same code already exists.");
+            }
             _context.Artikel.Add(plant);
             await _context.SaveChangesAsync();
 
